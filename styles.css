@@ -80,6 +80,21 @@ html, body {
   margin-bottom: 16px;
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+
 .app-name {
   font-size: 15px;
   font-weight: 600;
@@ -90,7 +105,26 @@ html, body {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
+}
+
+.live-clock {
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  min-width: 72px;
+  text-align: center;
+  transition: color 0.25s, background 0.25s, border-color 0.25s;
+}
+
+[data-theme="dark"] .live-clock {
+  color: var(--text-primary);
 }
 
 .text-btn {
