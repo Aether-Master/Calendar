@@ -10,6 +10,8 @@
   <title>Clarity — Daily Planner</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="logo.jpg" type="image/jpeg">
+  <link rel="apple-touch-icon" href="logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,8 +21,12 @@
     <!-- Header -->
     <header class="header">
       <div class="header-top">
-        <h1 class="app-name">Clarity</h1>
+        <div class="brand">
+          <img src="logo.jpg" alt="Clarity logo" class="logo">
+          <h1 class="app-name">Clarity</h1>
+        </div>
         <div class="header-actions">
+          <div id="liveClock" class="live-clock">12:00:00</div>
           <button id="themeBtn" class="icon-btn-header" aria-label="Toggle theme" title="Toggle dark/light mode">
             <svg id="themeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="5"/>
