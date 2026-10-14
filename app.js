@@ -80,20 +80,18 @@ function parseDateKey(key) {
 function occursOnDate(event, targetDate) {
   const targetKey = formatDateKey(targetDate);
   
-  // Non-recurring: exact date match
   if (!event.recurrence || event.recurrence === 'none') {
     return event.date === targetKey;
   }
   
   const start = parseDateKey(event.date);
-  if (targetDate < start) return false; // before start date
+  if (targetDate < start) return false;
   
   if (event.recurrence === 'daily') {
-    return true; // every day from start onward
+    return true;
   }
   
   if (event.recurrence === 'monthly') {
-    // Same day-of-month
     return targetDate.getDate() === start.getDate();
   }
   
@@ -105,7 +103,6 @@ function loadEvents() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     events = raw ? JSON.parse(raw) : [];
-    // Migration: ensure new fields exist
     events = events.map(e => ({
       done: false,
       recurrence: 'none',
@@ -188,7 +185,6 @@ function renderWeekStrip() {
     if (isSameDay(d, currentDate)) btn.classList.add('is-selected');
     if (isToday(d)) btn.classList.add('is-today');
     
-    // Has any event (including recurring) on this day?
     const has = events.some(e => occursOnDate(e, d));
     if (has) btn.classList.add('has-events');
     
@@ -210,7 +206,6 @@ function getEventsForCurrentDay() {
   return events
     .filter(e => occursOnDate(e, currentDate))
     .sort((a, b) => {
-      // Incomplete first, then all-day, then by time
       if (a.done !== b.done) return a.done ? 1 : -1;
       if (a.allDay && !b.allDay) return -1;
       if (!a.allDay && b.allDay) return 1;
@@ -238,7 +233,6 @@ function renderEvents() {
     const timeText = event.allDay ? 'All day' : formatTime(event.time);
     const timeClass = event.allDay ? 'event-time all-day' : 'event-time';
     
-    // Recurrence badge
     let recurBadge = '';
     if (event.recurrence === 'daily') {
       recurBadge = `<span class="recur-badge">Daily</span>`;
@@ -261,14 +255,12 @@ function renderEvents() {
       </div>
     `;
     
-    // Check button toggles done
     const checkBtn = card.querySelector('.check-btn');
     checkBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       toggleDone(event.id);
     });
     
-    // Rest of card opens edit
     card.addEventListener('click', () => openEditModal(event.id));
     
     eventsListEl.appendChild(card);
@@ -413,11 +405,27 @@ function handleTouchEnd(e) {
   }
 }
 
+// ===== Live Clock =====
+function updateLiveClock() {
+  const el = document.getElementById('liveClock');
+  if (!el) return;
+  
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2, '0');
+  const m = String(now.getMinutes()).padStart(2, '0');
+  const s = String(now.getSeconds()).padStart(2, '0');
+  el.textContent = `${h}:${m}:${s}`;
+}
+
 // ===== Init =====
 function init() {
   loadEvents();
   applyTheme(getPreferredTheme());
   render();
+  
+  // Start live clock
+  updateLiveClock();
+  setInterval(updateLiveClock, 1000);
   
   document.getElementById('prevDay').addEventListener('click', () => changeDay(-1));
   document.getElementById('nextDay').addEventListener('click', () => changeDay(1));
