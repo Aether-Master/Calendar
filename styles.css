@@ -77,7 +77,7 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 4px;
   position: relative;
 }
 
@@ -119,11 +119,16 @@ html, body {
   justify-content: flex-end;
 }
 
+/* ===== Clock Row ===== */
+.clock-row {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0 10px;
+}
+
 /* ===== Live Clock - Unique Masculine / Industrial ===== */
 .live-clock {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   font-family: 'Orbitron', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 17px;
   font-weight: 700;
@@ -132,7 +137,7 @@ html, body {
   color: #F0EDE8;
   background: 
     linear-gradient(160deg, #333333 0%, #1C1C1C 45%, #121212 100%);
-  padding: 9px 20px 8px;
+  padding: 9px 22px 8px;
   border-radius: 8px;
   border: 1px solid #4A4A4A;
   box-shadow: 
@@ -143,10 +148,9 @@ html, body {
   text-shadow: 
     0 0 14px rgba(220, 210, 190, 0.35),
     0 1px 1px rgba(0,0,0,0.8);
-  min-width: 118px;
+  min-width: 120px;
   text-align: center;
   transition: all 0.25s ease;
-  z-index: 5;
 }
 
 .live-clock::before {
