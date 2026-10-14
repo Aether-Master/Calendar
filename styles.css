@@ -78,21 +78,25 @@ html, body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+  position: relative;
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
+  flex: 1;
 }
 
 .logo {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   flex-shrink: 0;
+  border: 1.5px solid rgba(255,255,255,0.08);
 }
 
 .app-name {
@@ -105,26 +109,46 @@ html, body {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex: 1;
+  justify-content: flex-end;
 }
 
+/* ===== Live Clock - Masculine / Industrial ===== */
 .live-clock {
-  font-size: 13px;
-  font-weight: 600;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Inter', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 18px;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
-  color: var(--text-secondary);
-  padding: 4px 8px;
-  border-radius: 8px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  min-width: 72px;
+  letter-spacing: 0.12em;
+  color: #E8E6E3;
+  background: linear-gradient(145deg, #2A2A2A 0%, #1A1A1A 100%);
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: 1px solid #3D3D3D;
+  box-shadow: 
+    0 2px 8px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    inset 0 -1px 0 rgba(0,0,0,0.4);
+  text-shadow: 0 0 12px rgba(200, 200, 200, 0.25);
+  min-width: 110px;
   text-align: center;
-  transition: color 0.25s, background 0.25s, border-color 0.25s;
+  transition: all 0.25s ease;
+  z-index: 5;
 }
 
-[data-theme="dark"] .live-clock {
-  color: var(--text-primary);
+[data-theme="light"] .live-clock {
+  color: #1C1917;
+  background: linear-gradient(145deg, #F5F4F1 0%, #E8E6E1 100%);
+  border: 1px solid #D4D1CB;
+  box-shadow: 
+    0 2px 6px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    inset 0 -1px 0 rgba(0,0,0,0.06);
+  text-shadow: none;
 }
 
 .text-btn {
