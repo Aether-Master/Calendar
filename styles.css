@@ -100,10 +100,13 @@ html, body {
 }
 
 .app-name {
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--text-secondary);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
 }
 
 .header-actions {
@@ -114,41 +117,60 @@ html, body {
   justify-content: flex-end;
 }
 
-/* ===== Live Clock - Masculine / Industrial ===== */
+/* ===== Live Clock - Unique Masculine / Industrial ===== */
 .live-clock {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  font-family: 'Inter', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 18px;
+  font-family: 'Orbitron', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 17px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.12em;
-  color: #E8E6E3;
-  background: linear-gradient(145deg, #2A2A2A 0%, #1A1A1A 100%);
-  padding: 8px 18px;
-  border-radius: 10px;
-  border: 1px solid #3D3D3D;
+  letter-spacing: 0.18em;
+  color: #F0EDE8;
+  background: 
+    linear-gradient(160deg, #333333 0%, #1C1C1C 45%, #121212 100%);
+  padding: 9px 20px 8px;
+  border-radius: 8px;
+  border: 1px solid #4A4A4A;
   box-shadow: 
-    0 2px 8px rgba(0,0,0,0.35),
-    inset 0 1px 0 rgba(255,255,255,0.08),
-    inset 0 -1px 0 rgba(0,0,0,0.4);
-  text-shadow: 0 0 12px rgba(200, 200, 200, 0.25);
-  min-width: 110px;
+    0 3px 12px rgba(0,0,0,0.45),
+    0 1px 0 rgba(255,255,255,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    inset 0 -2px 4px rgba(0,0,0,0.5);
+  text-shadow: 
+    0 0 14px rgba(220, 210, 190, 0.35),
+    0 1px 1px rgba(0,0,0,0.8);
+  min-width: 118px;
   text-align: center;
   transition: all 0.25s ease;
   z-index: 5;
 }
 
+.live-clock::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  border-radius: 1px;
+}
+
 [data-theme="light"] .live-clock {
-  color: #1C1917;
-  background: linear-gradient(145deg, #F5F4F1 0%, #E8E6E1 100%);
-  border: 1px solid #D4D1CB;
+  color: #1A1816;
+  background: linear-gradient(160deg, #F8F6F2 0%, #E9E5DE 50%, #DED9D0 100%);
+  border: 1px solid #C8C2B8;
   box-shadow: 
-    0 2px 6px rgba(0,0,0,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.7),
-    inset 0 -1px 0 rgba(0,0,0,0.06);
-  text-shadow: none;
+    0 2px 8px rgba(0,0,0,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.85),
+    inset 0 -2px 3px rgba(0,0,0,0.06);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+}
+
+[data-theme="light"] .live-clock::before {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
 }
 
 .text-btn {
