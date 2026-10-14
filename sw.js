@@ -1,11 +1,12 @@
 // Simple service worker for offline support
-const CACHE_NAME = 'clarity-v1';
+const CACHE_NAME = 'clarity-v2';
 const ASSETS = [
   './',
   './index.html',
   './styles.css',
   './app.js',
-  './manifest.json'
+  './manifest.json',
+  './logo.jpg'
 ];
 
 self.addEventListener('install', (e) => {
