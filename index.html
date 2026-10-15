@@ -154,7 +154,28 @@
   <script src="app.js"></script>
   <script>
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("./sw.js").catch(console.error);
+      // Register with updateViaCache: 'none' so the browser always checks for a new SW
+      navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" })
+        .then((reg) => {
+          // Check for updates on every page load (covers pull-to-refresh)
+          reg.update().catch(() => {});
+
+          // When a new SW takes control, reload so the user gets the latest code
+          let refreshing = false;
+          navigator.serviceWorker.addEventListener("controllerchange", () => {
+            if (refreshing) return;
+            refreshing = true;
+            window.location.reload();
+          });
+        })
+        .catch(console.error);
+
+      // Also re-check when the app comes back to the foreground
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible" && navigator.serviceWorker.controller) {
+          navigator.serviceWorker.getRegistration().then((reg) => reg && reg.update());
+        }
+      });
     }
   </script>
 </body>
