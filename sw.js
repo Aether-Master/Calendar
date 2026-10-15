@@ -1,5 +1,5 @@
 // Clarity Service Worker – network-first so normal refresh / pull-to-refresh gets updates
-const CACHE_NAME = 'clarity-v5';
+const CACHE_NAME = 'clarity-v6';
 
 const ASSETS = [
   './',
@@ -7,7 +7,7 @@ const ASSETS = [
   './styles.css',
   './app.js',
   './manifest.json',
-  './Clock Logo.jpg'
+  './logo.jpg'
 ];
 
 // Install: pre-cache the app shell, then activate immediately
