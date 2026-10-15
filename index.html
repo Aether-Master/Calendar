@@ -20,138 +20,100 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div id="pinScreen" class="pin-screen hidden">
+    <div class="pin-card">
+      <img src="logo.jpg" alt="" class="pin-logo">
+      <h2 id="pinTitle">Enter PIN</h2>
+      <p id="pinSub" class="pin-sub">Your data stays on this device</p>
+      <div class="pin-dots" id="pinDots"><span></span><span></span><span></span><span></span></div>
+      <div class="pin-pad" id="pinPad">
+        <button type="button" data-n="1">1</button><button type="button" data-n="2">2</button><button type="button" data-n="3">3</button>
+        <button type="button" data-n="4">4</button><button type="button" data-n="5">5</button><button type="button" data-n="6">6</button>
+        <button type="button" data-n="7">7</button><button type="button" data-n="8">8</button><button type="button" data-n="9">9</button>
+        <button type="button" data-n="clear" class="pin-action">C</button><button type="button" data-n="0">0</button><button type="button" data-n="del" class="pin-action">⌫</button>
+      </div>
+      <p id="pinError" class="pin-error hidden">Incorrect PIN</p>
+    </div>
+  </div>
+
   <div id="app">
-    <!-- Header -->
-    <header class="header">
-      <div class="header-top">
-        <div class="brand-left">
-          <img src="logo.jpg" alt="Clarity logo" class="logo">
-        </div>
-        
-        <h1 class="app-name">Clarity</h1>
-        
-        <div class="header-actions">
-          <button id="themeBtn" class="icon-btn-header" aria-label="Toggle theme" title="Toggle dark/light mode">
-            <svg id="themeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="5"/>
-              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-            </svg>
-          </button>
-          <button id="todayBtn" class="text-btn" aria-label="Go to today">Today</button>
-        </div>
+    <div class="layout">
+      <aside class="side-panel" id="sidePanel">
+        <div class="mini-month" id="miniMonth"></div>
+        <button type="button" id="setPinBtn" class="side-btn">Set / Change PIN</button>
+        <button type="button" id="exportBtn" class="side-btn">Export backup</button>
+      </aside>
+
+      <div class="main-column">
+        <header class="header">
+          <div class="header-top">
+            <div class="brand-left"><img src="logo.jpg" alt="Clarity logo" class="logo"></div>
+            <h1 class="app-name">Clarity</h1>
+            <div class="header-actions">
+              <button id="menuBtn" class="icon-btn-header" aria-label="Menu" title="Calendar & settings">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </button>
+              <button id="themeBtn" class="icon-btn-header" aria-label="Toggle theme">
+                <svg id="themeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              </button>
+              <button id="todayBtn" class="text-btn">Today</button>
+            </div>
+          </div>
+          <div class="clock-row"><div id="liveClock" class="live-clock">12:00:00</div></div>
+          <div class="date-nav">
+            <button id="prevDay" class="nav-btn" aria-label="Previous day"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="current-date">
+              <div id="dayName" class="day-name">Wednesday</div>
+              <div id="fullDate" class="full-date">October 15, 2026</div>
+              <div id="todayBadge" class="today-badge hidden">Today</div>
+            </div>
+            <button id="nextDay" class="nav-btn" aria-label="Next day"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg></button>
+          </div>
+          <div id="weekStrip" class="week-strip"></div>
+        </header>
+
+        <main class="main">
+          <section class="daily-notes">
+            <label class="daily-notes-label" for="dayNotes">Day notes</label>
+            <textarea id="dayNotes" class="day-notes-input" rows="3" placeholder="Thoughts, priorities, or a quick journal for this day…"></textarea>
+          </section>
+          <div class="section-label">Plan</div>
+          <div id="eventsList" class="events-list"></div>
+          <div id="emptyState" class="empty-state hidden">
+            <div class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <p>Nothing planned</p>
+            <p class="empty-sub">Tap + to add something</p>
+          </div>
+          <section id="futurePeak" class="future-peak hidden">
+            <div class="future-peak-header"><span class="future-peak-label">Future Peak</span><span class="future-peak-line"></span></div>
+            <div id="futurePeakList" class="future-peak-list"></div>
+          </section>
+        </main>
       </div>
+    </div>
 
-      <div class="clock-row">
-        <div id="liveClock" class="live-clock">12:00:00</div>
-      </div>
+    <button id="addBtn" class="fab" aria-label="Add event"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
 
-      <div class="date-nav">
-        <button id="prevDay" class="nav-btn" aria-label="Previous day">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-            <path d="M15 18l-6-6 6-6"/>
-          </svg>
-        </button>
-        <div class="current-date">
-          <div id="dayName" class="day-name">Wednesday</div>
-          <div id="fullDate" class="full-date">October 14, 2026</div>
-          <div id="todayBadge" class="today-badge hidden">Today</div>
-        </div>
-        <button id="nextDay" class="nav-btn" aria-label="Next day">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-            <path d="M9 18l6-6-6-6"/>
-          </svg>
-        </button>
-      </div>
-
-      <div id="weekStrip" class="week-strip"></div>
-    </header>
-
-    <main class="main">
-      <div id="eventsList" class="events-list"></div>
-
-      <div id="emptyState" class="empty-state hidden">
-        <div class="empty-icon">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-            <line x1="16" y1="2" x2="16" y2="6"/>
-            <line x1="8" y1="2" x2="8" y2="6"/>
-            <line x1="3" y1="10" x2="21" y2="10"/>
-          </svg>
-        </div>
-        <p>Nothing planned</p>
-        <p class="empty-sub">Tap + to add something</p>
-      </div>
-
-      <!-- Future Peak: discreet upcoming events -->
-      <section id="futurePeak" class="future-peak hidden">
-        <div class="future-peak-header">
-          <span class="future-peak-label">Future Peak</span>
-          <span class="future-peak-line"></span>
-        </div>
-        <div id="futurePeakList" class="future-peak-list"></div>
-      </section>
-    </main>
-
-    <button id="addBtn" class="fab" aria-label="Add event">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <line x1="12" y1="5" x2="12" y2="19"/>
-        <line x1="5" y1="12" x2="19" y2="12"/>
-      </svg>
-    </button>
-
-    <!-- Modal -->
     <div id="modal" class="modal hidden">
       <div class="modal-backdrop" id="modalBackdrop"></div>
       <div class="modal-content">
         <div class="modal-header">
           <h2 id="modalTitle">New Event</h2>
-          <button id="closeModal" class="icon-btn" aria-label="Close">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
-          </button>
+          <button id="closeModal" class="icon-btn" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
         </div>
         <form id="eventForm">
-          <div class="form-group">
-            <label for="eventTitle">Title</label>
-            <input type="text" id="eventTitle" placeholder="What do you need to do?" required autocomplete="off" enterkeyhint="done">
-          </div>
-          
+          <div class="form-group"><label for="eventTitle">Title</label><input type="text" id="eventTitle" placeholder="What do you need to do?" required autocomplete="off" enterkeyhint="done"></div>
           <div class="form-row">
-            <div class="form-group">
-              <label for="eventTime">Time</label>
-              <input type="time" id="eventTime">
-            </div>
-            <div class="form-group checkbox-group">
-              <label class="checkbox-label">
-                <input type="checkbox" id="allDay">
-                <span>All day</span>
-              </label>
-            </div>
+            <div class="form-group"><label for="eventTime">Time</label><input type="time" id="eventTime"></div>
+            <div class="form-group checkbox-group"><label class="checkbox-label"><input type="checkbox" id="allDay"><span>All day</span></label></div>
           </div>
-          
-          <div class="form-group">
-            <label for="recurrence">Repeat</label>
-            <select id="recurrence">
-              <option value="none">Does not repeat</option>
-              <option value="daily">Daily</option>
-              <option value="monthly">Monthly</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label for="eventNote">Note <span class="optional">(optional)</span></label>
-            <textarea id="eventNote" rows="2" placeholder="Any extra details..."></textarea>
-          </div>
-          
-          <div class="form-actions">
-            <button type="button" id="deleteBtn" class="btn btn-danger hidden">Delete</button>
-            <button type="submit" class="btn btn-primary">Save</button>
-          </div>
+          <div class="form-group"><label for="recurrence">Repeat</label><select id="recurrence"><option value="none">Does not repeat</option><option value="daily">Daily</option><option value="monthly">Monthly</option></select></div>
+          <div class="form-group"><label for="eventNote">Note <span class="optional">(optional)</span></label><textarea id="eventNote" rows="2" placeholder="Any extra details..."></textarea></div>
+          <div class="form-actions"><button type="button" id="deleteBtn" class="btn btn-danger hidden">Delete</button><button type="submit" class="btn btn-primary">Save</button></div>
         </form>
       </div>
     </div>
+    <div id="sideBackdrop" class="side-backdrop hidden"></div>
   </div>
 
   <script src="app.js"></script>
@@ -166,14 +128,7 @@
             refreshing = true;
             window.location.reload();
           });
-        })
-        .catch(console.error);
-
-      document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "visible" && navigator.serviceWorker.controller) {
-          navigator.serviceWorker.getRegistration().then((reg) => reg && reg.update());
-        }
-      });
+        }).catch(console.error);
     }
   </script>
 </body>
