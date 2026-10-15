@@ -27,6 +27,8 @@ const deleteBtn = document.getElementById('deleteBtn');
 const themeBtn = document.getElementById('themeBtn');
 const themeIcon = document.getElementById('themeIcon');
 const recurrenceSelect = document.getElementById('recurrence');
+const futurePeakEl = document.getElementById('futurePeak');
+const futurePeakListEl = document.getElementById('futurePeakList');
 
 // ===== Helpers =====
 function formatDateKey(date) {
@@ -214,6 +216,33 @@ function getEventsForCurrentDay() {
     });
 }
 
+function getUpcomingEvents(limit = 6) {
+  const results = [];
+  const start = new Date(currentDate);
+  start.setHours(0, 0, 0, 0);
+
+  // Look ahead up to 21 days
+  for (let i = 1; i <= 21 && results.length < limit; i++) {
+    const d = new Date(start);
+    d.setDate(start.getDate() + i);
+
+    const dayEvents = events
+      .filter(e => occursOnDate(e, d) && !e.done)
+      .sort((a, b) => {
+        if (a.allDay && !b.allDay) return -1;
+        if (!a.allDay && b.allDay) return 1;
+        return (a.time || '').localeCompare(b.time || '');
+      });
+
+    dayEvents.forEach(ev => {
+      if (results.length < limit) {
+        results.push({ event: ev, date: new Date(d) });
+      }
+    });
+  }
+  return results;
+}
+
 function renderEvents() {
   const dayEvents = getEventsForCurrentDay();
   eventsListEl.innerHTML = '';
@@ -267,10 +296,45 @@ function renderEvents() {
   });
 }
 
+function renderFuturePeak() {
+  const upcoming = getUpcomingEvents(6);
+  futurePeakListEl.innerHTML = '';
+
+  if (upcoming.length === 0) {
+    futurePeakEl.classList.add('hidden');
+    return;
+  }
+
+  futurePeakEl.classList.remove('hidden');
+
+  upcoming.forEach(({ event, date }) => {
+    const item = document.createElement('div');
+    item.className = 'future-item' + (event.done ? ' is-done' : '');
+    item.dataset.id = event.id;
+
+    const dateLabel = date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    const timeText = event.allDay ? 'All day' : formatTime(event.time);
+
+    item.innerHTML = `
+      <span class="future-date">${dateLabel}</span>
+      <span class="future-time">${timeText}</span>
+      <span class="future-title">${escapeHtml(event.title)}</span>
+    `;
+
+    item.addEventListener('click', () => {
+      currentDate = new Date(date);
+      render();
+    });
+
+    futurePeakListEl.appendChild(item);
+  });
+}
+
 function render() {
   renderDate();
   renderWeekStrip();
   renderEvents();
+  renderFuturePeak();
 }
 
 // ===== Done toggle =====
