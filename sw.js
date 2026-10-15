@@ -1,5 +1,5 @@
 // Clarity Service Worker – network-first so normal refresh / pull-to-refresh gets updates
-const CACHE_NAME = 'clarity-v7';
+const CACHE_NAME = 'clarity-v8';
 
 const ASSETS = [
   './',
@@ -8,8 +8,8 @@ const ASSETS = [
   './app.js',
   './manifest.json',
   './logo.jpg',
-  './logo-192.png',
-  './logo-512.png'
+  './grok_1792097393461.png',
+  './grok_1792097387700.png'
 ];
 
 self.addEventListener('install', (event) => {
