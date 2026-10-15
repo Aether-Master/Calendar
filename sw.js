@@ -1,5 +1,5 @@
 // Clarity Service Worker – network-first so normal refresh / pull-to-refresh gets updates
-const CACHE_NAME = 'clarity-v6';
+const CACHE_NAME = 'clarity-v7';
 
 const ASSETS = [
   './',
@@ -7,18 +7,18 @@ const ASSETS = [
   './styles.css',
   './app.js',
   './manifest.json',
-  './logo.jpg'
+  './logo.jpg',
+  './logo-192.png',
+  './logo-512.png'
 ];
 
-// Install: pre-cache the app shell, then activate immediately
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS).catch(() => {}))
   );
   self.skipWaiting();
 });
 
-// Activate: delete old caches and take control of open pages right away
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -31,7 +31,6 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch strategy
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
@@ -40,7 +39,6 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin) return;
 
   const path = url.pathname;
-  // App shell files that should always try the network first
   const isAppShell =
     path.endsWith('/') ||
     path.endsWith('/index.html') ||
@@ -50,7 +48,6 @@ self.addEventListener('fetch', (event) => {
     path.endsWith('/sw.js');
 
   if (isAppShell) {
-    // Network-first → a normal refresh / pull-to-refresh gets the newest version
     event.respondWith(
       fetch(req)
         .then((networkRes) => {
@@ -65,7 +62,6 @@ self.addEventListener('fetch', (event) => {
         )
     );
   } else {
-    // Images and other static assets: cache-first (faster, still works offline)
     event.respondWith(
       caches.match(req).then((cached) => {
         if (cached) return cached;
