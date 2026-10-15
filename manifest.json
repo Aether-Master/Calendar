@@ -1,34 +1,35 @@
 {
-  "name": "Clarity — Daily Planner",
+  "name": "Clarity",
   "short_name": "Clarity",
   "description": "A calm, simple daily planner",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/Calendar/",
+  "scope": "/Calendar/",
+  "id": "/Calendar/",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],
   "orientation": "portrait-primary",
-  "background_color": "#F7F6F3",
+  "background_color": "#0C0A09",
   "theme_color": "#4F46E5",
   "lang": "en",
   "dir": "ltr",
   "categories": ["productivity", "lifestyle"],
   "icons": [
     {
-      "src": "logo.jpg",
+      "src": "/Calendar/logo-192.png",
       "sizes": "192x192",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "logo.jpg",
+      "src": "/Calendar/logo-512.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "logo.jpg",
+      "src": "/Calendar/logo-512.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "maskable"
     }
   ]
